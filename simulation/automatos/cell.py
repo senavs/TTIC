@@ -10,7 +10,7 @@ class Cell:
         self.data = data
 
     def __bool__(self):
-        return self.data.condition in (Condition.EXPOSED, Condition.INFECTIOUS)
+        return self.data.is_sick()
 
     def __eq__(self, other: Union['Cell', Subject, Condition]):
         if isinstance(other, Cell):
