@@ -8,3 +8,7 @@ class PathologySettings:
     PROB_DEATH: float = 0.03
     EXPOSED_MAX_DAY: int = 7
     INFECTIOUS_MAX_DAY: int = 14
+
+
+class BoardSettings:
+    DIMENSION: int = 51

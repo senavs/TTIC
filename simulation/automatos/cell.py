@@ -1,13 +1,17 @@
 from typing import Union
 
-from simulation.core.condition import Condition
+from simulation.core.condition import Condition, ConditionColor
 from simulation.core.subject import Subject
 
 
 class Cell:
 
-    def __init__(self, data: Subject):
+    def __init__(self, x: int, y: int, data: Subject):
+        self.x, self.y = x, y
         self.data = data
+
+    def draw(self) -> tuple[int, int, int]:
+        return ConditionColor[self.data.condition.value].value
 
     def __bool__(self):
         return self.data.is_sick()
@@ -20,4 +24,4 @@ class Cell:
         return self.data.condition == other
 
     def __repr__(self):
-        return f'Cell({self.data})'
+        return f'Cell({self.x}, {self.y}, {self.data})'
