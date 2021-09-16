@@ -18,6 +18,7 @@ class PathologySettings:
 
 class BoardSettings:
     DIMENSION: int = 51
+    CELL_SICK_POSITION: tuple[int, int] = (25, 25)
 
 
 class PrinterSettings:

@@ -23,10 +23,24 @@ class Board:
         # create board with health subjects
         for i in range(x):
             for j in range(y):
-                if i == x // 2 and j == y // 2:
-                    subject = Subject.create_sick_subject()
-                else:
-                    subject = Subject()
-                board[i, j] = Cell(i, j, subject)
+                board[i, j] = Cell(i, j, Subject())
+
+        x, y = BoardSettings.CELL_SICK_POSITION
+        board[x, y] = Cell(x, y, Subject.create_sick_subject())
 
         return board
+
+    def sick_cells(self) -> bool:
+        return self.filter_sick().size > 0
+
+    def filter_sick(self) -> np.ndarray:
+        return self.board[np.bool_(self.board) == True]  # noqa
+
+    def get_neighbours(self, cell: Cell) -> list[Cell]:
+        x, y = cell.x, cell.y
+
+        neighbours: np.ndarray = np.concatenate(list(row[y - (y > 0):y + 2] for row in self.board[x - (x > 0): x + 2]))
+        neighbours: list = neighbours.tolist()  # noqa
+        neighbours.remove(cell)
+
+        return neighbours

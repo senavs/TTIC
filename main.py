@@ -1,7 +1,4 @@
-from simulation.automatos.board import Board
-from simulation.report.printer import Printer
+from simulation.automatos.progress import Progress
 
-board = Board()
-printer = Printer()
-
-printer.print(board)
+p = Progress()
+p.progress()

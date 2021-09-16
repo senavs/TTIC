@@ -6,22 +6,22 @@ from simulation.core.subject import Subject
 
 class Cell:
 
-    def __init__(self, x: int, y: int, data: Subject):
+    def __init__(self, x: int, y: int, subject: Subject):
         self.x, self.y = x, y
-        self.data = data
+        self.subject = subject
 
     def draw(self) -> tuple[int, int, int]:
-        return ConditionColor[self.data.condition.value].value
+        return ConditionColor[self.subject.condition.value].value
 
     def __bool__(self):
-        return self.data.is_sick()
+        return self.subject.is_sick()
 
     def __eq__(self, other: Union['Cell', Subject, Condition]):
         if isinstance(other, Cell):
-            return self.data.condition == other.data.condition
+            return (self.subject.condition == other.subject.condition) and (self.x == other.x and self.y == other.y)
         elif isinstance(other, Subject):
-            return self.data.condition == other.condition
-        return self.data.condition == other
+            return self.subject.condition == other.condition
+        return self.subject.condition == other
 
     def __repr__(self):
-        return f'Cell({self.x}, {self.y}, {self.data})'
+        return f'Cell({self.x}, {self.y}, {self.subject})'

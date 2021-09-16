@@ -22,7 +22,7 @@ class Printer:
 
         return figure, axis
 
-    def draw(self, arr: np.ndarray, save: bool = True) -> np.ndarray:
+    def imshow(self, arr: np.ndarray) -> np.ndarray:
         self.axis.cla()  # noqa: clear axis data to decrease figure.savefig time
         self.axis.axis('off')  # noqa
         image = self.axis.imshow(arr)  # noqa
@@ -32,16 +32,14 @@ class Printer:
         plt.hlines(y=np.arange(0, pixel) + 0.5, xmin=np.full(pixel, 0) - 0.5, xmax=np.full(pixel, pixel) - 0.5, color="black", linewidth=0.2)
         plt.vlines(x=np.arange(0, pixel) + 0.5, ymin=np.full(pixel, 0) - 0.5, ymax=np.full(pixel, pixel) - 0.5, color="black", linewidth=0.2)
 
-        if save:
-            # TODO: image name must be related with Progress
-            self.figure.savefig(f'{PrinterSettings.OUTPUT_BOARD_DIR}/foo.png', bbox_inches='tight')
-
         return image
 
-    def print(self, board: Board):
+    def print(self, board: Board, file_name: str):
         func = np.frompyfunc(lambda cell: cell.draw(), 1, 1)
 
         draw_board = np.array(func(board.board).tolist(), dtype=np.uint8)
-        image = self.draw(draw_board)
+        image = self.imshow(draw_board)
+
+        self.figure.savefig(f'{PrinterSettings.OUTPUT_BOARD_DIR}/{file_name}.png', bbox_inches='tight')
 
         return image
