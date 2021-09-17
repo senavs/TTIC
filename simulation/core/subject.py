@@ -2,8 +2,9 @@ import random
 from itertools import count
 
 from simulation.core.pathology import ConcretePathology, Pathology, NullPathology
-from simulation.settings import SubjectSettings
 from simulation.core.condition import Condition
+from simulation.core.prevention import PreventionGroup, SocialIsolation, Mask, Vaccine
+from simulation.settings import SubjectSettings
 
 
 class Subject:
@@ -18,6 +19,7 @@ class Subject:
         self.age: int = random.randint(SubjectSettings.MIN_AGE, SubjectSettings.MAX_AGE + 1)
         self.condition: Condition = Condition.NORMAL
         self.pathology: Pathology = NullPathology(self)
+        self.preventions: PreventionGroup = PreventionGroup(self, SocialIsolation, Mask, Vaccine)
         self.healthy_lifestyle: float = random.random()
 
     def agglomerate(self, subjects: list['Subject']):

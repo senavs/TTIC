@@ -68,7 +68,7 @@ class ConcretePathology(Pathology):
         if subject.condition != Condition.NORMAL:
             return False
 
-        return random.random() <= self.prob_infection
+        return random.random() <= self.prob_infection * self.subject.preventions.get_prob_infection()
 
     def kill(self) -> bool:
         if not self.should_kill():
@@ -78,11 +78,10 @@ class ConcretePathology(Pathology):
         return True
 
     def should_kill(self) -> bool:
-        # TODO: it has to consider prevention probs
         if self.subject.condition not in (Condition.EXPOSED, Condition.INFECTIOUS):
             return False
 
-        prob = (self.prob_death * (self.subject.age / SubjectSettings.MAX_AGE)) / self.subject.healthy_lifestyle
+        prob = (self.prob_death * (self.subject.age / SubjectSettings.MAX_AGE)) / self.subject.healthy_lifestyle * self.subject.preventions.get_prob_death()
         return random.random() <= prob
 
     def evolve(self):

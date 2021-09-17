@@ -2,6 +2,7 @@ import numpy as np
 
 from simulation.automatos.cell import Cell
 from simulation.core.subject import Subject
+from simulation.core.pathology import ConcretePathology
 from simulation.settings import BoardSettings
 
 
@@ -9,6 +10,7 @@ class Board:
 
     def __init__(self):
         self.board = self.initialize_board()
+        self.n_cells = BoardSettings.DIMENSION * BoardSettings.DIMENSION
 
     @property
     def dimension(self) -> tuple[int, int]:
@@ -35,6 +37,9 @@ class Board:
 
     def filter_sick(self) -> np.ndarray:
         return self.board[np.bool_(self.board) == True]  # noqa
+
+    def filter_have_been_sick(self) -> np.ndarray:
+        return self.board[np.equal(self.board, ConcretePathology)]  # noqa
 
     def get_neighbours(self, cell: Cell) -> list[Cell]:
         x, y = cell.x, cell.y
