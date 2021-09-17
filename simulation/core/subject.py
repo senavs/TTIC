@@ -19,7 +19,7 @@ class Subject:
         self.age: int = random.randint(SubjectSettings.MIN_AGE, SubjectSettings.MAX_AGE + 1)
         self.condition: Condition = Condition.NORMAL
         self.pathology: Pathology = NullPathology(self)
-        self.preventions: PreventionGroup = PreventionGroup(self)
+        self.preventions: PreventionGroup = PreventionGroup(self, SocialIsolation, Mask, Vaccine)
         self.healthy_lifestyle: float = random.random()
 
     def agglomerate(self, subjects: list['Subject']):
