@@ -4,7 +4,7 @@ from matplotlib.axes import SubplotBase
 from matplotlib.figure import Figure
 
 from simulation.automatos.board import Board
-from simulation.settings import PrinterSettings
+from simulation.settings import ReportSettings
 
 
 class Printer:
@@ -14,8 +14,8 @@ class Printer:
 
     @staticmethod
     def initialize_figure() -> tuple[Figure, SubplotBase]:
-        width, height = PrinterSettings.OUTPUT_BOARD_RESOLUTION
-        dpi = PrinterSettings.OUTPUT_BOARD_DPI
+        width, height = ReportSettings.OUTPUT_BOARD_RESOLUTION
+        dpi = ReportSettings.OUTPUT_BOARD_DPI
 
         figure = plt.figure(figsize=(width / dpi, height / dpi), dpi=dpi)
         axis = plt.subplot(1, 1, 1)
@@ -40,6 +40,6 @@ class Printer:
         draw_board = np.array(func(board.board).tolist(), dtype=np.uint8)
         image = self.imshow(draw_board)
 
-        self.figure.savefig(f'{PrinterSettings.OUTPUT_BOARD_DIR}/{file_name}.png', bbox_inches='tight')
+        self.figure.savefig(f'{ReportSettings.OUTPUT_BOARD_DIR}/{file_name}.png', bbox_inches='tight')
 
         return image
