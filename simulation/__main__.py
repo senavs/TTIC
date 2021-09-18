@@ -3,7 +3,6 @@ import argparse
 from simulation.settings import SIMULATION_UUID
 from simulation.automatos.progress import Progress
 from simulation.core.prevention import SocialIsolation, Mask, Vaccine
-from simulation.core.subject import Subject
 
 PREVENTIONS = {
     'isolation': SocialIsolation,
@@ -28,9 +27,7 @@ if __name__ == '__main__':
         preventions_names.append(flag)
         selected_preventions.append(PREVENTIONS[flag])
 
-    Subject.set_preventions(selected_preventions)
-
     print(f'{SIMULATION_UUID: <38} {", ".join(preventions_names if preventions_names else ["null"])}')
 
-    p = Progress()
+    p = Progress(selected_preventions)
     p.progress()

@@ -43,8 +43,10 @@ class Prevention(ABC):
         self.subject = subject
 
     @classmethod
-    def activate(cls):
+    def activate(cls) -> bool:
+        original_value = cls.is_activated
         cls.is_activated = True
+        return original_value != cls.is_activated
 
     @classmethod
     def deactivate(cls):

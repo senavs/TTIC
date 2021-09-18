@@ -14,6 +14,7 @@ class Reporter:
 
         self.cells_data = pd.DataFrame(columns=['x', 'y', 'age', 'healthy'])
         self.steps_data = pd.DataFrame(columns=[f'cell_{n:0>5}' for n in range(self.flatten_board.size)])
+        self.prevt_data = pd.DataFrame([[0, 0, 0]], columns=['isolation', 'mask', 'vaccine'])
 
     def report_cells(self):
         for cell in self.flatten_board:
@@ -29,6 +30,12 @@ class Reporter:
 
         self.steps_data.loc[len(self.steps_data)] = func(self.flatten_board)
 
+    def report_prevt(self, type: str, started_day: int):
+        assert type in self.prevt_data.columns
+
+        self.prevt_data[type] = started_day
+
     def save(self):
         self.cells_data.to_csv(f'{ReportSettings.OUTPUT_SHEET_DIR}/cells.csv', index=False)  # noqa
         self.steps_data.to_csv(f'{ReportSettings.OUTPUT_SHEET_DIR}/steps.csv', index=False)  # noqa
+        self.prevt_data.to_csv(f'{ReportSettings.OUTPUT_SHEET_DIR}/prevt.csv', index=False)  # noqa

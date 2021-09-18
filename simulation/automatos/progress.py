@@ -1,13 +1,19 @@
+from typing import Type
+
 from simulation.automatos.board import Board
+from simulation.core.subject import Subject
 from simulation.report.printer import Printer
-from simulation.core.prevention import SocialIsolation, Mask, Vaccine
+from simulation.core.prevention import SocialIsolation, Mask, Vaccine, Prevention
 from simulation.report.reporter import Reporter
 from simulation.settings import PreventionSettings
 
 
 class Progress:
 
-    def __init__(self):
+    def __init__(self, preventions: list[Type['Prevention']]):
+        self.selected_prevention = preventions
+        Subject.set_preventions(preventions)
+
         self.current_time = 0
         self.board = Board()
         self.printer = Printer()
@@ -39,9 +45,15 @@ class Progress:
         self.current_time += 1
 
     def activate_preventions(self):
-        if self.board.filter_have_been_sick().size >= self.board.n_cells * PreventionSettings.MASK_PERC_ACTIVATION:
-            Mask.activate()
-        if self.board.filter_have_been_sick().size >= self.board.n_cells * PreventionSettings.ISOLATION_PERC_ACTIVATION:
-            SocialIsolation.activate()
-        if self.board.filter_have_been_sick().size >= self.board.n_cells * PreventionSettings.VACCINE_PERC_ACTIVATION:
-            Vaccine.activate()
+        if Mask in self.selected_prevention and \
+                self.board.filter_have_been_sick().size >= self.board.n_cells * PreventionSettings.MASK_PERC_ACTIVATION:
+            if Mask.activate():
+                self.reporter.report_prevt('mask', self.current_time)
+        if SocialIsolation in self.selected_prevention and \
+                self.board.filter_have_been_sick().size >= self.board.n_cells * PreventionSettings.ISOLATION_PERC_ACTIVATION:
+            if SocialIsolation.activate():
+                self.reporter.report_prevt('isolation', self.current_time)
+        if Vaccine in self.selected_prevention and \
+                self.board.filter_have_been_sick().size >= self.board.n_cells * PreventionSettings.VACCINE_PERC_ACTIVATION:
+            if Vaccine.activate():
+                self.reporter.report_prevt('vaccine', self.current_time)
