@@ -1,7 +1,7 @@
 import os
 from uuid import uuid4
 
-simulation_uuid = uuid4()
+SIMULATION_UUID = str(uuid4())
 
 
 class SubjectSettings:
@@ -39,8 +39,8 @@ class BoardSettings:
 class ReportSettings:
     OUTPUT_BOARD_RESOLUTION: tuple[int, int] = (800, 800)
     OUTPUT_BOARD_DPI: int = 96
-    OUTPUT_BOARD_DIR: str = f'./results/{simulation_uuid}/board'
-    OUTPUT_SHEET_DIR: str = f'./results/{simulation_uuid}/sheet'
+    OUTPUT_BOARD_DIR: str = f'./results/{SIMULATION_UUID}/board'
+    OUTPUT_SHEET_DIR: str = f'./results/{SIMULATION_UUID}/sheet'
 
 
 os.makedirs(ReportSettings.OUTPUT_BOARD_DIR, exist_ok=True)
