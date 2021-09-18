@@ -20,7 +20,7 @@ class PreventionSettings:
     # MASK
     MASK_PROB_INFECTION: float = 0.2
     MASK_PROB_DEATH: float = 1
-    MASK_PERC_ACTIVATION: float = 0.1
+    MASK_PERC_ACTIVATION: float = 0.4
     # ISOLATION
     ISOLATION_PROB_INFECTION: float = 0.5
     ISOLATION_PROB_DEATH: float = 1
@@ -28,7 +28,7 @@ class PreventionSettings:
     # VACCINE
     VACCINE_PROB_INFECTION: float = 1
     VACCINE_PROB_DEATH: float = 0.05
-    VACCINE_PERC_ACTIVATION: float = 0.3
+    VACCINE_PERC_ACTIVATION: float = 0.6
 
 
 class BoardSettings:
