@@ -18,7 +18,7 @@ class Subject:
 
     def __init__(self):
         self.id: int = next(self._icounter)
-        self.age: int = random.randint(SubjectSettings.MIN_AGE, SubjectSettings.MAX_AGE + 1)
+        self.age: int = random.randint(SubjectSettings.MIN_AGE, SubjectSettings.MAX_AGE)
         self.condition: Condition = Condition.NORMAL
         self.pathology: Pathology = NullPathology(self)
         self.preventions: PreventionGroup = PreventionGroup(self, *self._preventions)
