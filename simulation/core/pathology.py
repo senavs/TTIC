@@ -2,7 +2,7 @@ import random
 from abc import ABC, abstractmethod
 from typing import TYPE_CHECKING
 
-from simulation.settings import SubjectSettings, PathologySettings
+from simulation.settings import subject_settings, pathology_settings
 from simulation.core.condition import Condition
 
 if TYPE_CHECKING:
@@ -15,10 +15,10 @@ class Pathology(ABC):
         self.infected_days: int = 0
         self.subject = subject
 
-        self.prob_infection: float = PathologySettings.PROB_INFECTION
-        self.prob_death: float = PathologySettings.PROB_DEATH
-        self.exposed_max_day: float = PathologySettings.EXPOSED_MAX_DAY
-        self.infectious_max_day: float = PathologySettings.INFECTIOUS_MAX_DAY
+        self.prob_infection: float = pathology_settings.PROB_INFECTION
+        self.prob_death: float = pathology_settings.PROB_DEATH
+        self.exposed_max_day: float = pathology_settings.EXPOSED_MAX_DAY
+        self.infectious_max_day: float = pathology_settings.INFECTIOUS_MAX_DAY
 
     @abstractmethod
     def infect(self, subject: 'Subject') -> bool:
@@ -81,7 +81,7 @@ class ConcretePathology(Pathology):
         if self.subject.condition not in (Condition.EXPOSED, Condition.INFECTIOUS):
             return False
 
-        prob = (self.prob_death * (self.subject.age / SubjectSettings.MAX_AGE)) / self.subject.healthy_lifestyle * self.subject.preventions.get_prob_death()
+        prob = (self.prob_death * (self.subject.age / subject_settings.MAX_AGE)) / self.subject.healthy_lifestyle * self.subject.preventions.get_prob_death()
         return random.random() <= prob
 
     def evolve(self):

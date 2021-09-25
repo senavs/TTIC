@@ -1,16 +1,14 @@
-from typing import Type
-
 from simulation.automatos.board import Board
 from simulation.core.subject import Subject
 from simulation.report.printer import Printer
-from simulation.core.prevention import SocialIsolation, Mask, Vaccine, Prevention, PreventionEnum
+from simulation.core.prevention import SocialIsolation, Mask, Vaccine, PreventionEnum
 from simulation.report.reporter import Reporter
-from simulation.settings import PreventionSettings
+from simulation.settings import prevention_settings
 
 PREVS = {
-    'mask': [Mask, PreventionSettings.MASK_PERC_ACTIVATION],
-    'isolation': [SocialIsolation, PreventionSettings.ISOLATION_PERC_ACTIVATION],
-    'vaccine': [Vaccine, PreventionSettings.VACCINE_PERC_ACTIVATION],
+    'mask': [Mask, prevention_settings.MASK_PERC_ACTIVATION],
+    'isolation': [SocialIsolation, prevention_settings.ISOLATION_PERC_ACTIVATION],
+    'vaccine': [Vaccine, prevention_settings.VACCINE_PERC_ACTIVATION],
 }
 
 

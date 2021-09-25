@@ -3,18 +3,18 @@ import numpy as np
 from simulation.automatos.cell import Cell
 from simulation.core.subject import Subject
 from simulation.core.pathology import ConcretePathology
-from simulation.settings import BoardSettings
+from simulation.settings import board_settings
 
 
 class Board:
 
     def __init__(self):
         self.board = self.initialize_board()
-        self.n_cells = BoardSettings.DIMENSION * BoardSettings.DIMENSION
+        self.n_cells = board_settings.DIMENSION * board_settings.DIMENSION
 
     @property
     def dimension(self) -> tuple[int, int]:
-        selected_dimension = BoardSettings.DIMENSION
+        selected_dimension = board_settings.DIMENSION
         dimension = selected_dimension if selected_dimension % 2 == 1 else selected_dimension + 1
         return dimension, dimension
 
@@ -27,7 +27,7 @@ class Board:
             for j in range(y):
                 board[i, j] = Cell(i, j, Subject())
 
-        x, y = BoardSettings.CELL_SICK_POSITION
+        x, y = board_settings.CELL_SICK_POSITION
         board[x, y] = Cell(x, y, Subject.create_sick_subject())
 
         return board

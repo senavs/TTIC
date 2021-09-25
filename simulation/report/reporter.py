@@ -4,7 +4,7 @@ import numpy as np
 import pandas as pd
 
 from simulation.automatos.board import Board
-from simulation.settings import ReportSettings
+from simulation.settings import report_settings
 
 
 class Reporter:
@@ -30,12 +30,12 @@ class Reporter:
 
         self.steps_data.loc[len(self.steps_data)] = func(self.flatten_board)
 
-    def report_prevt(self, type: str, started_day: int):
-        assert type in self.prevt_data.columns
+    def report_prevt(self, prevt_type: str, started_day: int):
+        assert prevt_type in self.prevt_data.columns
 
-        self.prevt_data[type] = started_day
+        self.prevt_data[prevt_type] = started_day
 
     def save(self):
-        self.cells_data.to_csv(f'{ReportSettings.OUTPUT_SHEET_DIR}/cells.csv', index=False)  # noqa
-        self.steps_data.to_csv(f'{ReportSettings.OUTPUT_SHEET_DIR}/steps.csv', index=False)  # noqa
-        self.prevt_data.to_csv(f'{ReportSettings.OUTPUT_SHEET_DIR}/prevt.csv', index=False)  # noqa
+        self.cells_data.to_csv(f'{report_settings.OUTPUT_SHEET_DIR}/cells.csv', index=False)  # noqa
+        self.steps_data.to_csv(f'{report_settings.OUTPUT_SHEET_DIR}/steps.csv', index=False)  # noqa
+        self.prevt_data.to_csv(f'{report_settings.OUTPUT_SHEET_DIR}/prevt.csv', index=False)  # noqa

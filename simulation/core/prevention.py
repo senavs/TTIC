@@ -4,7 +4,7 @@ from functools import reduce
 from operator import mul
 from typing import TYPE_CHECKING, Type
 
-from simulation.settings import PreventionSettings
+from simulation.settings import prevention_settings
 
 if TYPE_CHECKING:
     from simulation.core.subject import Subject
@@ -66,8 +66,8 @@ class SocialIsolation(Prevention):
     def __init__(self, subject: 'Subject'):
         super().__init__(
             subject,
-            PreventionSettings.ISOLATION_PROB_INFECTION,
-            PreventionSettings.ISOLATION_PROB_DEATH
+            prevention_settings.ISOLATION_PROB_INFECTION,
+            prevention_settings.ISOLATION_PROB_DEATH
         )
 
     def evolve(self):
@@ -79,8 +79,8 @@ class Mask(Prevention):
     def __init__(self, subject: 'Subject'):
         super().__init__(
             subject,
-            PreventionSettings.MASK_PROB_INFECTION,
-            PreventionSettings.MASK_PROB_DEATH
+            prevention_settings.MASK_PROB_INFECTION,
+            prevention_settings.MASK_PROB_DEATH
         )
 
     def evolve(self):
@@ -92,8 +92,8 @@ class Vaccine(Prevention):
     def __init__(self, subject: 'Subject'):
         super().__init__(
             subject,
-            PreventionSettings.VACCINE_PROB_INFECTION,
-            PreventionSettings.VACCINE_PROB_DEATH
+            prevention_settings.VACCINE_PROB_INFECTION,
+            prevention_settings.VACCINE_PROB_DEATH
         )
 
     def evolve(self):

@@ -7,7 +7,7 @@ from matplotlib.axes import SubplotBase
 from matplotlib.figure import Figure
 
 from simulation.automatos.board import Board
-from simulation.settings import ReportSettings
+from simulation.settings import report_settings
 
 
 class Printer:
@@ -17,8 +17,8 @@ class Printer:
 
     @staticmethod
     def initialize_figure() -> tuple[Figure, SubplotBase]:
-        width, height = ReportSettings.OUTPUT_BOARD_RESOLUTION
-        dpi = ReportSettings.OUTPUT_BOARD_DPI
+        width, height = report_settings.OUTPUT_BOARD_DIMENSION
+        dpi = report_settings.OUTPUT_BOARD_DPI
 
         figure = plt.figure(figsize=(width / dpi, height / dpi), dpi=dpi)
         axis = plt.subplot(1, 1, 1)
@@ -43,13 +43,13 @@ class Printer:
         draw_board = np.array(func(board.board).tolist(), dtype=np.uint8)
         image = self.imshow(draw_board)
 
-        self.figure.savefig(f'{ReportSettings.OUTPUT_BOARD_DIR}/{file_name}.png', bbox_inches='tight')
+        self.figure.savefig(f'{report_settings.OUTPUT_BOARD_DIR}/{file_name}.png', bbox_inches='tight')
 
         return image
 
     @classmethod
     def make_gif(cls):
         images = []
-        for filename in sorted(os.listdir(ReportSettings.OUTPUT_BOARD_DIR)):
-            images.append(imageio.imread(os.path.join(ReportSettings.OUTPUT_BOARD_DIR, filename)))
-        imageio.mimsave(f'{ReportSettings.OUTPUT_GIF_DIR}/movie.gif', images)
+        for filename in sorted(os.listdir(report_settings.OUTPUT_BOARD_DIR)):
+            images.append(imageio.imread(os.path.join(report_settings.OUTPUT_BOARD_DIR, filename)))
+        imageio.mimsave(f'{report_settings.OUTPUT_GIF_DIR}/movie.gif', images)

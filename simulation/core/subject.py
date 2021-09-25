@@ -4,8 +4,8 @@ from typing import Type
 
 from simulation.core.pathology import ConcretePathology, Pathology, NullPathology
 from simulation.core.condition import Condition
-from simulation.core.prevention import PreventionGroup, SocialIsolation, Mask, Vaccine, Prevention
-from simulation.settings import SubjectSettings
+from simulation.core.prevention import PreventionGroup, Prevention
+from simulation.settings import subject_settings
 
 
 class Subject:
@@ -18,7 +18,7 @@ class Subject:
 
     def __init__(self):
         self.id: int = next(self._icounter)
-        self.age: int = random.randint(SubjectSettings.MIN_AGE, SubjectSettings.MAX_AGE)
+        self.age: int = random.randint(subject_settings.MIN_AGE, subject_settings.MAX_AGE)
         self.condition: Condition = Condition.NORMAL
         self.pathology: Pathology = NullPathology(self)
         self.preventions: PreventionGroup = PreventionGroup(self, *self._preventions)
