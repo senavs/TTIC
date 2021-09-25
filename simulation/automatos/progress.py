@@ -1,9 +1,11 @@
+from datetime import datetime
+
 from simulation.automatos.board import Board
 from simulation.core.subject import Subject
 from simulation.report.printer import Printer
 from simulation.core.prevention import SocialIsolation, Mask, Vaccine, PreventionEnum
 from simulation.report.reporter import Reporter
-from simulation.settings import prevention_settings
+from simulation.settings import prevention_settings, SIMULATION_UUID
 
 PREVS = {
     'mask': [Mask, prevention_settings.MASK_PERC_ACTIVATION],
@@ -39,8 +41,13 @@ class Progress:
             self.activate_preventions()
 
         self.record()
+        print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - images saved')
+
         self.reporter.save()
+        print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - sheets saved')
+
         self.printer.make_gif()
+        print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - gif saved')
 
     def record(self):
         self.current_time += 1
@@ -59,3 +66,4 @@ class Progress:
                 continue
 
             self.reporter.report_prevt(name, self.current_time)
+            print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - {name} activated. {self.current_time} days')

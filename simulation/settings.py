@@ -8,7 +8,7 @@ SIMULATION_UUID = str(uuid4())
 
 class SimulationBaseSetting(BaseSettings):
     class Config:
-        env_file = '.config'
+        env_file = 'simulation.config'
         env_file_encoding = 'utf-8'
 
 
@@ -61,19 +61,19 @@ class ReportSettings(SimulationBaseSetting):
 
     @property
     def OUTPUT_BOARD_DIR(self) -> str:  # noqa
-        return f'./results/{SIMULATION_UUID}/board'
+        return os.path.join(self.OUTPUT_BASE_DIR, f'results/{SIMULATION_UUID}/board')
 
     @property
     def OUTPUT_SHEET_DIR(self) -> str:  # noqa
-        return f'./results/{SIMULATION_UUID}/sheet'
+        return os.path.join(self.OUTPUT_BASE_DIR, f'results/{SIMULATION_UUID}/sheet')
 
     @property
     def OUTPUT_GRAPH_DIR(self) -> str:  # noqa
-        return f'./results/{SIMULATION_UUID}/graph'
+        return os.path.join(self.OUTPUT_BASE_DIR, f'results/{SIMULATION_UUID}/graph')
 
     @property
     def OUTPUT_GIF_DIR(self) -> str:  # noqa
-        return f'./results/{SIMULATION_UUID}/gif'
+        return os.path.join(self.OUTPUT_BASE_DIR, f'results/{SIMULATION_UUID}/gif')
 
     @property
     def OUTPUT_BOARD_DIMENSION(self) -> tuple[int, int]:  # noqa

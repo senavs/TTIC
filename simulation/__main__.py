@@ -28,7 +28,10 @@ if __name__ == '__main__':
         preventions_names.append(flag)
         selected_preventions.append(PREVENTIONS[flag])
 
-    print(f'{datetime.now().isoformat()} {SIMULATION_UUID: <38} {", ".join(preventions_names if preventions_names else ["null"])}')
+    preventions = ", ".join(preventions_names if preventions_names else ["null"])
+    print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - start. preventions: {preventions}')
 
     p = Progress(*selected_preventions)
     p.progress()
+
+    print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - done. {p.current_time} days')
