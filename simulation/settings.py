@@ -1,4 +1,5 @@
 import os
+import random
 from uuid import uuid4
 
 from pydantic import BaseSettings, Field, validator
@@ -40,6 +41,7 @@ class PreventionSettings(SimulationBaseSetting):
 
 
 class BoardSettings(SimulationBaseSetting):
+    RANDOM_SEED: int = 101
     DIMENSION: int = Field(51, ge=9)
     CELL_SICK_LOCATION: int = 25
 
@@ -90,3 +92,4 @@ os.makedirs(report_settings.OUTPUT_BOARD_DIR, exist_ok=True)
 os.makedirs(report_settings.OUTPUT_SHEET_DIR, exist_ok=True)
 os.makedirs(report_settings.OUTPUT_GRAPH_DIR, exist_ok=True)
 os.makedirs(report_settings.OUTPUT_GIF_DIR, exist_ok=True)
+random.seed(board_settings.RANDOM_SEED)
