@@ -1,13 +1,14 @@
 import argparse
+from datetime import datetime
 
 from simulation.settings import SIMULATION_UUID
 from simulation.automatos.progress import Progress
-from simulation.core.prevention import SocialIsolation, Mask, Vaccine
+from simulation.core.prevention import PreventionEnum
 
 PREVENTIONS = {
-    'isolation': SocialIsolation,
-    'mask': Mask,
-    'vaccine': Vaccine
+    'isolation': PreventionEnum.isolation,
+    'mask': PreventionEnum.mask,
+    'vaccine': PreventionEnum.vaccine,
 }
 
 parser = argparse.ArgumentParser(description='Spread disease simulation')
@@ -27,7 +28,7 @@ if __name__ == '__main__':
         preventions_names.append(flag)
         selected_preventions.append(PREVENTIONS[flag])
 
-    print(f'{SIMULATION_UUID: <38} {", ".join(preventions_names if preventions_names else ["null"])}')
+    print(f'{datetime.now().isoformat()} {SIMULATION_UUID: <38} {", ".join(preventions_names if preventions_names else ["null"])}')
 
-    p = Progress(selected_preventions)
+    p = Progress(*selected_preventions)
     p.progress()

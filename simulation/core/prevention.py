@@ -1,9 +1,10 @@
 from abc import ABC, abstractmethod
+from enum import Enum
 from functools import reduce
 from operator import mul
 from typing import TYPE_CHECKING, Type
 
-from simulation.settings import PreventionSettings, SubjectSettings
+from simulation.settings import PreventionSettings
 
 if TYPE_CHECKING:
     from simulation.core.subject import Subject
@@ -102,3 +103,9 @@ class Vaccine(Prevention):
         #
         # if -self.prevented_days % SubjectSettings.MAX_AGE >= self.subject.age:
         #     pass
+
+
+class PreventionEnum(Enum):
+    mask = Mask
+    isolation = SocialIsolation
+    vaccine = Vaccine

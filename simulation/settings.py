@@ -41,7 +41,11 @@ class ReportSettings:
     OUTPUT_BOARD_DPI: int = 96
     OUTPUT_BOARD_DIR: str = f'./results/{SIMULATION_UUID}/board'
     OUTPUT_SHEET_DIR: str = f'./results/{SIMULATION_UUID}/sheet'
+    OUTPUT_GRAPH_DIR: str = f'./results/{SIMULATION_UUID}/graph'
+    OUTPUT_GIF_DIR: str = f'./results/{SIMULATION_UUID}/gif'
 
 
 os.makedirs(ReportSettings.OUTPUT_BOARD_DIR, exist_ok=True)
 os.makedirs(ReportSettings.OUTPUT_SHEET_DIR, exist_ok=True)
+os.makedirs(ReportSettings.OUTPUT_GRAPH_DIR, exist_ok=True)
+os.makedirs(ReportSettings.OUTPUT_GIF_DIR, exist_ok=True)

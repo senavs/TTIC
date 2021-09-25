@@ -1,4 +1,7 @@
+import os
+
 import numpy as np
+import imageio
 from matplotlib import pyplot as plt
 from matplotlib.axes import SubplotBase
 from matplotlib.figure import Figure
@@ -34,7 +37,7 @@ class Printer:
 
         return image
 
-    def print(self, board: Board, file_name: str):
+    def draw(self, board: Board, file_name: str):
         func = np.frompyfunc(lambda cell: cell.draw(), 1, 1)
 
         draw_board = np.array(func(board.board).tolist(), dtype=np.uint8)
@@ -43,3 +46,10 @@ class Printer:
         self.figure.savefig(f'{ReportSettings.OUTPUT_BOARD_DIR}/{file_name}.png', bbox_inches='tight')
 
         return image
+
+    @classmethod
+    def make_gif(cls):
+        images = []
+        for filename in sorted(os.listdir(ReportSettings.OUTPUT_BOARD_DIR)):
+            images.append(imageio.imread(os.path.join(ReportSettings.OUTPUT_BOARD_DIR, filename)))
+        imageio.mimsave(f'{ReportSettings.OUTPUT_GIF_DIR}/movie.gif', images)
