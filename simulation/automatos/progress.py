@@ -33,7 +33,7 @@ class Progress:
             self.record()
 
             for sick_cell in self.board.filter_sick():
-                neighbours = self.board.get_neighbours(sick_cell)
+                neighbours = self.board.get_closest_neighbours(sick_cell)
                 sick_cell.subject.agglomerate([cell.subject for cell in neighbours])
 
                 sick_cell.subject.pathology.evolve()

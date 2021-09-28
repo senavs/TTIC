@@ -49,3 +49,15 @@ class Board:
         neighbours.remove(cell)
 
         return neighbours
+
+    def get_closest_neighbours(self, cell: Cell) -> list[Cell]:
+        x, y = cell.x, cell.y
+
+        vline = self.board[x - (x > 0): x + 2, y]
+        hline = self.board[x, y - (y > 0):y + 2]
+        neighbours: list = np.concatenate((vline, hline)).tolist()  # noqa
+
+        neighbours.remove(cell)
+        neighbours.remove(cell)
+
+        return neighbours
