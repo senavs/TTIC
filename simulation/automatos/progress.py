@@ -2,9 +2,9 @@ from datetime import datetime
 
 from simulation.automatos.board import Board
 from simulation.core.subject import Subject
-from simulation.report.printer import Printer
+from simulation.report.drawer import BoardImageDrawer, BoardGifDrawer, GraphDrawer
 from simulation.core.prevention import SocialIsolation, Mask, Vaccine, PreventionEnum
-from simulation.report.reporter import Reporter
+from simulation.report.reporter import SheetReporter
 from simulation.settings import prevention_settings, SIMULATION_UUID
 
 PREVS = {
@@ -23,38 +23,35 @@ class Progress:
         self.current_time = 0
         self.board = Board()
 
-        self.printer = Printer()
-        self.reporter = Reporter(self.board)
+    def run(self):
+        with BoardImageDrawer() as board_drawer, SheetReporter(self.board) as sheet_reporter:
+            sheet_reporter.report_steps()
 
-    def progress(self):
-        self.reporter.report_cells()
+            while self.board.sick_cells():
+                self.current_time += 1
 
-        while self.board.sick_cells():
-            self.record()
+                board_drawer.draw(self.board, f'{self.current_time:0>5}')
+                sheet_reporter.report_steps()
 
-            for sick_cell in self.board.filter_sick():
-                neighbours = self.board.get_closest_neighbours(sick_cell)
-                sick_cell.subject.agglomerate([cell.subject for cell in neighbours])
+                for sick_cell in self.board.filter_sick():
+                    neighbours = self.board.get_closest_neighbours(sick_cell)
+                    sick_cell.subject.agglomerate([cell.subject for cell in neighbours])
+                    sick_cell.subject.pathology.evolve()
 
-                sick_cell.subject.pathology.evolve()
+                self._activate_preventions(sheet_reporter)
+            else:
+                self.current_time += 1
 
-            self.activate_preventions()
+                board_drawer.draw(self.board, f'{self.current_time:0>5}')
+                sheet_reporter.report_steps()
 
-        self.record()
-        print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - images saved')
+        with BoardGifDrawer() as gif_drawer:
+            gif_drawer.draw()
 
-        self.reporter.save()
-        print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - sheets saved')
+        with GraphDrawer() as graph_drawer:
+            graph_drawer.draw()
 
-        self.printer.make_gif()
-        print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - gif saved')
-
-    def record(self):
-        self.current_time += 1
-        self.printer.draw(self.board, f'{self.current_time:0>5}')
-        self.reporter.report_steps()
-
-    def activate_preventions(self):
+    def _activate_preventions(self, sheet_reporter: SheetReporter):
         n_cells_have_been_sick = self.board.filter_have_been_sick().size
 
         for name, (prev, prec_setting) in PREVS.items():
@@ -65,5 +62,5 @@ class Progress:
             if not prev.activate():
                 continue
 
-            self.reporter.report_prevt(name, self.current_time)
+            sheet_reporter.report_prevt(name, self.current_time)
             print(f'{datetime.now().isoformat()} {SIMULATION_UUID} - {name} activated. {self.current_time} days')

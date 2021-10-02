@@ -7,7 +7,7 @@ from simulation.automatos.board import Board
 from simulation.settings import report_settings
 
 
-class Reporter:
+class SheetReporter:
 
     def __init__(self, board: Board):
         self.flatten_board: np.ndarray = board.board.reshape(mul(*board.board.shape))
@@ -35,7 +35,11 @@ class Reporter:
 
         self.prevt_data[prevt_type] = started_day
 
-    def save(self):
+    def __enter__(self) -> 'SheetReporter':
+        self.report_cells()
+        return self
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
         self.cells_data.to_csv(f'{report_settings.OUTPUT_SHEET_DIR}/cells.csv', index=False)  # noqa
         self.steps_data.to_csv(f'{report_settings.OUTPUT_SHEET_DIR}/steps.csv', index=False)  # noqa
         self.prevt_data.to_csv(f'{report_settings.OUTPUT_SHEET_DIR}/prevt.csv', index=False)  # noqa

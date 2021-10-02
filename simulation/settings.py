@@ -26,14 +26,14 @@ class PathologySettings(SimulationBaseSetting):
 
 
 class PreventionSettings(SimulationBaseSetting):
-    # MASK
-    MASK_PROB_INFECTION: float = Field(0.2, ge=0, le=1)
-    MASK_PROB_DEATH: float = Field(1, ge=0, le=1)
-    MASK_PERC_ACTIVATION: float = Field(0.4, ge=0, le=1)
     # ISOLATION
     ISOLATION_PROB_INFECTION: float = Field(0.5, ge=0, le=1)
     ISOLATION_PROB_DEATH: float = Field(1, ge=0, le=1)
     ISOLATION_PERC_ACTIVATION: float = Field(0.2, ge=0, le=1)
+    # MASK
+    MASK_PROB_INFECTION: float = Field(0.4, ge=0, le=1)
+    MASK_PROB_DEATH: float = Field(1, ge=0, le=1)
+    MASK_PERC_ACTIVATION: float = Field(0.4, ge=0, le=1)
     # VACCINE
     VACCINE_PROB_INFECTION: float = Field(1, ge=0, le=1)
     VACCINE_PROB_DEATH: float = Field(0.05, ge=0, le=1)
@@ -58,8 +58,6 @@ class BoardSettings(SimulationBaseSetting):
 
 class ReportSettings(SimulationBaseSetting):
     OUTPUT_BASE_DIR: str = './'
-    OUTPUT_BOARD_RESOLUTION: int = Field(800, ge=800, le=1920)
-    OUTPUT_BOARD_DPI: int = 96
 
     @property
     def OUTPUT_BOARD_DIR(self) -> str:  # noqa
@@ -76,10 +74,6 @@ class ReportSettings(SimulationBaseSetting):
     @property
     def OUTPUT_GIF_DIR(self) -> str:  # noqa
         return os.path.join(self.OUTPUT_BASE_DIR, f'results/{SIMULATION_UUID}/gif')
-
-    @property
-    def OUTPUT_BOARD_DIMENSION(self) -> tuple[int, int]:  # noqa
-        return self.OUTPUT_BOARD_RESOLUTION, self.OUTPUT_BOARD_RESOLUTION
 
 
 subject_settings = SubjectSettings()
