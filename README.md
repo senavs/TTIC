@@ -15,5 +15,5 @@ Disease spread simulation with cellular automaton
   <img src="./documentations/simulation/wp/infected_per_day.png" width="50%"/><img src="./documentations/simulation/ap/infected_per_day.png" width="50%"/>
   <img src="./documentations/simulation/wp/dead.png" width="50%"/><img src="./documentations/simulation/ap/dead.png" width="50%"/>
   <img src="./documentations/simulation/wp/dead_per_day.png" width="50%"/><img src="./documentations/simulation/ap/dead_per_day.png" width="50%"/>
-  <img src="./documentations/simulation/wp/dead_by_age.png" width="50%"/><img src="./documentations/simulation/ap/dead_by_age.png" width="50%"/>
+  <img src="./documentations/simulation/ap/dead_by_age.png" width="50%"/><img src="./documentations/simulation/wp/dead_by_age.png" width="50%"/>
 </p>
